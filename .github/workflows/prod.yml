@@ -30,6 +30,12 @@ jobs:
       #     cd ..
       #     cd ..
       #     sls deploy --stage dev
+      - name: deploy ssm values
+        run: |
+          cd ssm
+          sls deploy --stage prod
       - name: deploy backend
         run: |
+          cd api
+          npm i
           sls deploy --stage prod

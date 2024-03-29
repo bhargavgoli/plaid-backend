@@ -1,0 +1,10 @@
+dev:
+  client_id: 6603817cc0bc8d001c30c03e
+  secret: 4c806c9a70e1660883877580594bff
+  env: sandbox
+  redirect_uri: http://localhost:5173/oauth
+prod:
+  client_id: 6603817cc0bc8d001c30c03e
+  secret: 87fa0a9eb127da50157d6783cf6bf5
+  env: development
+  redirect_uri: https://master.d198dbmkpkqssv.amplifyapp.com/oauth

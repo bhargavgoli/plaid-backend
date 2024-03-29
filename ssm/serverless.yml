@@ -1,0 +1,43 @@
+service: mvfl-ssm
+
+
+custom:
+  Conf: ${file(./Conf.yml)}
+
+  
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+
+resources:
+  Resources:
+    PlaidClientId:
+      Type: "AWS::SSM::Parameter"
+      Properties:
+        Name: "/plaid/${self:provider.stage}/client_id"
+        Type: "String"
+        Value: ${self:custom.Conf.${self:provider.stage}.client_id}
+        Description: "Plaid Client Id"
+    PlaidSecretKey:
+      Type: "AWS::SSM::Parameter"
+      Properties:
+        Name: "/plaid/${self:provider.stage}/secret"
+        Type: "String"
+        Value: ${self:custom.Conf.${self:provider.stage}.secret}
+        Description: "Plaid Secret Key"
+    PlaidEnv:
+      Type: "AWS::SSM::Parameter"
+      Properties:
+        Name: "/plaid/${self:provider.stage}/env"
+        Type: "String"
+        Value: ${self:custom.Conf.${self:provider.stage}.env}
+        Description: "Plaid Environment"
+    PlaidRedirectUri:
+      Type: "AWS::SSM::Parameter"
+      Properties:
+        Name: "/plaid/${self:provider.stage}/redirect_uri"
+        Type: "String"
+        Value: ${self:custom.Conf.${self:provider.stage}.redirect_uri}
+        Description: "Plaid OAuth Redirect Uri"
