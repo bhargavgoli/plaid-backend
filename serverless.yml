@@ -1,0 +1,86 @@
+service: goli-plade
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev
+  profile: goli
+  httpApi:
+    cors: true
+
+
+# you can add statements to the Lambda function's IAM Role here
+#  iam:
+#    role:
+#      statements:
+#        - Effect: "Allow"
+#          Action:
+#            - "s3:ListBucket"
+#          Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+#        - Effect: "Allow"
+#          Action:
+#            - "s3:PutObject"
+#          Resource:
+#            Fn::Join:
+#              - ""
+#              - - "arn:aws:s3:::"
+#                - "Ref" : "ServerlessDeploymentBucket"
+#                - "/*"
+
+# you can define service wide environment variables here
+  environment:
+    PLAID_CLIENT_ID: 6603817cc0bc8d001c30c03e
+    PLAID_SECRET: 4c806c9a70e1660883877580594bff
+    PLAID_ENV: sandbox
+    PLAID_REDIRECT_URI: http://localhost:5173/oauth
+
+# you can add packaging information here
+#package:
+#  patterns:
+#    - '!exclude-me.js'
+#    - '!exclude-me-dir/**'
+#    - include-me.js
+#    - include-me-dir/**
+
+functions:
+  plaid-token:
+    handler: plaid-token.handler
+    events:
+      - httpApi:
+          path: /create_token
+          method: get
+
+  exchage-public-token:
+    handler: exchange-public-token.handler
+    events:
+      - httpApi:
+          path: /exp_token
+          method: post
+
+  get-balance:
+    handler: get-balance.handler
+    events:
+      - httpApi:
+          path: /balance
+          method: get
+
+# you can add CloudFormation resource templates here
+# resources:
+#   Resources:
+#     PladApi:
+#       Type: AWS::Serverless::Api
+#       Properties:
+#         StageName: !Ref Stage
+
+#     Stage:
+#       Type: AWS::ApiGateway::Stage
+#       Properties:
+#         StageName: dev
+#         RestApiId: !Ref PladApi
+#       DependsOn: PladApi  # Ensure PladApi is created first
+
+#   Outputs:
+#     PladApiDeploymentId:
+#       Value: !Ref PladApi
