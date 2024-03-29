@@ -31,10 +31,10 @@ provider:
 
 # you can define service wide environment variables here
   environment:
-    PLAID_CLIENT_ID: 6603817cc0bc8d001c30c03e
-    PLAID_SECRET: 4c806c9a70e1660883877580594bff
-    PLAID_ENV: sandbox
-    PLAID_REDIRECT_URI: http://localhost:5173/oauth
+    PLAID_CLIENT_ID: ${ssm:/plaid/${self:provider.stage}/client_id}
+    PLAID_SECRET: ${ssm:/plaid/${self:provider.stage}/secret}
+    PLAID_ENV: ${ssm:/plaid/${self:provider.stage}/env}
+    PLAID_REDIRECT_URI: ${ssm:/plaid/${self:provider.stage}/redirect_uri}
 
 # you can add packaging information here
 #package:
