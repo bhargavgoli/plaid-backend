@@ -1,6 +1,8 @@
 'use strict';
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 
+
+
 const config = new Configuration({
   basePath: PlaidEnvironments[process.env.PLAID_ENV],
   baseOptions: {
