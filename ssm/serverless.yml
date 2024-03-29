@@ -10,6 +10,7 @@ provider:
   runtime: nodejs18.x
   region: us-east-1
   stage: ${opt:stage, 'dev'}
+  profile: goli
 
 resources:
   Resources:
